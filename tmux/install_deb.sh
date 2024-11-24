@@ -17,7 +17,7 @@ install_package "tmux"
 DOTFILES_DIR=$(pwd)
 
 # Define target locations
-TMUX_CONF="$HOME/.tmux.conf"
+TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 
 # Create symlinks function
 create_symlink() {
