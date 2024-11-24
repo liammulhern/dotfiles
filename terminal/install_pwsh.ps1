@@ -1,9 +1,10 @@
 ##################
-# VSCode install
+# Terminal install
 ##################
 
 # Get the current directory
-$currentDirectory = Get-Location
+$currentLocation = Get-Location
+$currentDirectory = Join-Path $currentLocation "terminal"
 $userHome = $env:USERPROFILE
 
 # Define the symlink file paths

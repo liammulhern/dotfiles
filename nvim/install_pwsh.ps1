@@ -3,7 +3,8 @@
 ##################
 
 # Get the current directory
-$currentDirectory = Get-Location
+$currentLocation = Get-Location
+$currentDirectory = Join-Path $currentLocation "nvim"
 $userHome = $env:USERPROFILE
 
 # Define file paths in the current directory

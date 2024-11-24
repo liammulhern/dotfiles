@@ -6,10 +6,15 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 # Get the current directory
 $currentDirectory = Get-Location
+$currentScript = $MyInvocation.MyCommand.Path
 
 # Find all "install_pwsh.ps1" scripts in direct subdirectories
 $scripts = Get-ChildItem -Path $currentDirectory -Filter "install_pwsh.ps1" -Recurse |
-    Where-Object { $_.DirectoryName -ne $currentDirectory.FullName -and $_.DirectoryName.StartsWith($currentDirectory.FullName) }
+    Where-Object {
+        $_.DirectoryName -ne $currentDirectory.FullName -and
+        $_.DirectoryName.StartsWith($currentDirectory.FullName) -and
+        $_.FullName -ne $currentScript
+    }
 
 # Check if any scripts were found
 if ($scripts.Count -eq 0) {
