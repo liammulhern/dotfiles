@@ -41,26 +41,6 @@ try {
     Write-Host "An error occurred: $_" -ForegroundColor Red
 }
 
-# Check if the 'posh-git' module is installed
-if (-not (Get-Module -ListAvailable -Name posh-git)) {
-    Write-Host "'posh-git' is not installed. Installing now..." -ForegroundColor Yellow
-    try {
-        # Ensure PowerShellGet is available
-        if (-not (Get-Command -Name Install-Module -ErrorAction SilentlyContinue)) {
-            Write-Host "PowerShellGet is not available. Please install it to proceed." -ForegroundColor Red
-            return
-        }
-
-        # Install the 'posh-git' module
-        PowerShellGet\Install-Module -Name posh-git -Scope CurrentUser -Force
-        Write-Host "'posh-git' has been successfully installed." -ForegroundColor Green
-    } catch {
-        Write-Host "An error occurred during the installation of 'posh-git': $_" -ForegroundColor Red
-    }
-} else {
-    Write-Host "'posh-git' is already installed." -ForegroundColor Green
-}
-
 # Function to check and install a package using winget
 function Install-WithWinget {
     param (
@@ -72,7 +52,7 @@ function Install-WithWinget {
         Write-Host "'$CommandName' is not installed. Installing now using winget..." -ForegroundColor Yellow
         try {
             # Run winget to install the package
-            winget install --id $WingetId --silent --accept-package-agreements --accept-source-agreements
+            winget install --id $WingetId --source winget --silent --accept-package-agreements --accept-source-agreements
             Write-Host "'$CommandName' has been successfully installed." -ForegroundColor Green
         } catch {
             Write-Host "An error occurred during the installation of '$CommandName': $_" -ForegroundColor Red
@@ -94,3 +74,28 @@ Install-WithWinget -CommandName "komorebic" -WingetId "LGUG2Z.komorebi"
 # Check and install whkd
 Install-WithWinget -CommandName "whkd" -WingetId "LGUG2Z.whkd"
 
+# Check and install Oh My Posh
+Install-WithWinget -CommandName "oh-my-posh" -WingetId "JanDeDobbeleer.OhMyPosh"
+#
+# Check and install Neovim
+Install-WithWinget -CommandName "nvim" -WingetId "Neovim.Neovim"
+
+# Check if the 'posh-git' module is installed
+if (-not (Get-Module -ListAvailable -Name posh-git)) {
+    Write-Host "'posh-git' is not installed. Installing now..." -ForegroundColor Yellow
+    try {
+        # Ensure PowerShellGet is available
+        if (-not (Get-Command -Name Install-Module -ErrorAction SilentlyContinue)) {
+            Write-Host "PowerShellGet is not available. Please install it to proceed." -ForegroundColor Red
+            return
+        }
+
+        # Install the 'posh-git' module
+        PowerShellGet\Install-Module -Name posh-git -Scope CurrentUser -Force
+        Write-Host "'posh-git' has been successfully installed." -ForegroundColor Green
+    } catch {
+        Write-Host "An error occurred during the installation of 'posh-git': $_" -ForegroundColor Red
+    }
+} else {
+    Write-Host "'posh-git' is already installed." -ForegroundColor Green
+}
