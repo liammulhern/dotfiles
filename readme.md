@@ -14,3 +14,10 @@
 5. bat:
     - `sudo apt install bat`
     - https://github.com/sharkdp/bat
+
+# Windows Config Files
+
+1. pwsh:
+    - Move `Microsoft.PowerShell_profile.ps1` to `...\Documents\WindowsPowerShell\`
+2. komorebi:
+    - Move `komorebi.*.json` to `C:\Users\*`
