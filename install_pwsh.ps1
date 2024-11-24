@@ -1,132 +1,25 @@
 # Get the current directory
 $currentDirectory = Get-Location
 
-# Define file paths in the current directory
-$profileSource = Join-Path $currentDirectory "Microsoft.PowerShell_profile.ps1"
-$komorebiJsonSource = Join-Path $currentDirectory "komorebi.json"
-$komorebiBarJsonSource = Join-Path $currentDirectory "komorebi.bar.json"
-$nvimSource = Join-Path $currentDirectory "nvim"
+# Find all "install_pwsh.ps1" scripts in direct subdirectories
+$scripts = Get-ChildItem -Path $currentDirectory -Filter "install_pwsh.ps1" -Recurse |
+    Where-Object { $_.DirectoryName -ne $currentDirectory.FullName -and $_.DirectoryName.StartsWith($currentDirectory.FullName) }
 
-# Get target directories
-$profileTarget = $PROFILE                                    # PowerShell profile path
-$userHome = $env:USERPROFILE
+# Check if any scripts were found
+if ($scripts.Count -eq 0) {
+    Write-Host "No 'install_pwsh.ps1' scripts found in direct subdirectories." -ForegroundColor Yellow
+} else {
+    Write-Host "Found the following 'install_pwsh.ps1' scripts:" -ForegroundColor Green
+    $scripts | ForEach-Object { Write-Host $_.FullName }
 
-# Create symbolic links
-try {
-    # Symlink for PowerShell profile
-    if (-Not (Test-Path $profileTarget)) {
-        New-Item -ItemType SymbolicLink -Path $profileTarget -Target $profileSource
-        Write-Host "Created symlink for PowerShell profile at $profileTarget" -ForegroundColor Green
-    } else {
-        Write-Host "PowerShell profile symlink already exists." -ForegroundColor Yellow
-    }
-
-    # Symlink for komorebi.json
-    $komorebiJsonTarget = Join-Path $userHome "komorebi.json"
-    if (-Not (Test-Path $komorebiJsonTarget)) {
-        New-Item -ItemType SymbolicLink -Path $komorebiJsonTarget -Target $komorebiJsonSource
-        Write-Host "Created symlink for komorebi.json at $komorebiJsonTarget" -ForegroundColor Green
-    } else {
-        Write-Host "komorebi.json symlink already exists." -ForegroundColor Yellow
-    }
-
-    # Symlink for komorebi.bar.json
-    $komorebiBarJsonTarget = Join-Path $userHome "komorebi.bar.json"
-    if (-Not (Test-Path $komorebiBarJsonTarget)) {
-        New-Item -ItemType SymbolicLink -Path $komorebiBarJsonTarget -Target $komorebiBarJsonSource
-        Write-Host "Created symlink for komorebi.bar.json at $komorebiBarJsonTarget" -ForegroundColor Green
-    } else {
-        Write-Host "komorebi.bar.json symlink already exists." -ForegroundColor Yellow
-    }
-
-    # Symlink for nvim
-    $nvimTarget = Join-Path $userHome "AppData\Local\nvim"
-    if (-Not (Test-Path $nvimTarget)) {
-        New-Item -ItemType SymbolicLink -Path $nvimTarget -Target $nvimSource
-        Write-Host "Created symlink for nvim at $nvimTarget" -ForegroundColor Green
-    } else {
-        Write-Host "nvim symlink already exists." -ForegroundColor Yellow
-    }
-} catch {
-    Write-Host "An error occurred: $_" -ForegroundColor Red
-}
-
-# Function to check and install a package using winget
-function Install-WithWinget {
-    param (
-        [string]$CommandName,
-        [string]$WingetId
-    )
-
-    if (-not (Get-Command $CommandName -ErrorAction SilentlyContinue)) {
-        Write-Host "'$CommandName' is not installed. Installing now using winget..." -ForegroundColor Yellow
+    # Invoke each script
+    foreach ($script in $scripts) {
+        Write-Host "Invoking script: $($script.FullName)" -ForegroundColor Cyan
         try {
-            # Run winget to install the package
-            winget install --id $WingetId --source winget --silent --accept-package-agreements --accept-source-agreements
-            Write-Host "'$CommandName' has been successfully installed." -ForegroundColor Green
+            & $script.FullName
+            Write-Host "Successfully invoked: $($script.FullName)" -ForegroundColor Green
         } catch {
-            Write-Host "An error occurred during the installation of '$CommandName': $_" -ForegroundColor Red
+            Write-Host "Failed to invoke: $($script.FullName). Error: $_" -ForegroundColor Red
         }
-    } else {
-        Write-Host "'$CommandName' is already installed." -ForegroundColor Green
     }
-}
-
-# Check and install zoxide
-Install-WithWinget -CommandName "zoxide" -WingetId "ajeetdsouza.zoxide"
-
-# Check and install fzf
-Install-WithWinget -CommandName "fzf" -WingetId "fzf"
-
-# Check and install komorebi
-Install-WithWinget -CommandName "komorebic" -WingetId "LGUG2Z.komorebi"
-
-# Check and install whkd
-Install-WithWinget -CommandName "whkd" -WingetId "LGUG2Z.whkd"
-
-# Check and install Oh My Posh
-Install-WithWinget -CommandName "oh-my-posh" -WingetId "JanDeDobbeleer.OhMyPosh"
-#
-# Check and install Neovim
-Install-WithWinget -CommandName "nvim" -WingetId "Neovim.Neovim"
-
-# Check if the 'posh-git' module is installed
-if (-not (Get-Module -ListAvailable -Name posh-git)) {
-    Write-Host "'posh-git' is not installed. Installing now..." -ForegroundColor Yellow
-    try {
-        # Ensure PowerShellGet is available
-        if (-not (Get-Command -Name Install-Module -ErrorAction SilentlyContinue)) {
-            Write-Host "PowerShellGet is not available. Please install it to proceed." -ForegroundColor Red
-            return
-        }
-
-        # Install the 'posh-git' module
-        PowerShellGet\Install-Module -Name posh-git -Scope CurrentUser -Force
-        Write-Host "'posh-git' has been successfully installed." -ForegroundColor Green
-    } catch {
-        Write-Host "An error occurred during the installation of 'posh-git': $_" -ForegroundColor Red
-    }
-} else {
-    Write-Host "'posh-git' is already installed." -ForegroundColor Green
-}
-
-# Define the path to add
-$newPath = "C:\Program Files\nvim\bin"
-
-# Get the current system PATH
-$currentPath = [Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
-
-# Check if the new path is already in the PATH
-if ($currentPath -notlike "*$newPath*") {
-    Write-Host "'$newPath' is not in the system PATH. Adding it now..." -ForegroundColor Yellow
-    try {
-        # Add the new path
-        $updatedPath = "$currentPath;$newPath"
-        [Environment]::SetEnvironmentVariable("Path", $updatedPath, [System.EnvironmentVariableTarget]::Machine)
-        Write-Host "'$newPath' has been successfully added to the system PATH." -ForegroundColor Green
-    } catch {
-        Write-Host "An error occurred while adding '$newPath' to the system PATH: $_" -ForegroundColor Red
-    }
-} else {
-    Write-Host "'$newPath' is already in the system PATH." -ForegroundColor Green
 }

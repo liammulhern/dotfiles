@@ -20,14 +20,13 @@
 
 # Windows Config Files
 
-1. pwsh:
-    - Move `Microsoft.PowerShell_profile.ps1` to `...\Documents\WindowsPowerShell\`
-    - If required set user to use remoteSigned for script execution using `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned`
-2. komorebi:
-    - Move `komorebi.*.json` to `C:\Users\*`
-3. zoxide:
-    - `winget install ajeetdsouza.zoxide`
-    - https://github.com/ajeetdsouza/zoxide
-4. fzf:
-    - `winget install fzf`
-    - https://github.com/junegunn/fzf
+> [!WARNING]
+> If required set user to use RemoteSigned for script execution using `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned` as administrator
+
+1. pwsh
+2. komorebi
+3. zoxide
+4. fzf
+5. oh-my-posh
+6. nvim
+7. vscode

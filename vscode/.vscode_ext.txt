@@ -1,0 +1,14 @@
+eamodio.gitlens
+enkia.tokyo-night
+ms-python.debugpy
+ms-python.python
+ms-python.vscode-pylance
+ms-vscode-remote.remote-wsl
+ms-vscode.cpptools
+murloccra4ler.leap
+platformio.platformio-ide
+ritwickdey.liveserver
+visualstudioexptteam.intellicode-api-usage-examples
+visualstudioexptteam.vscodeintellicode
+vscodevim.vim
+yzhang.markdown-all-in-one
