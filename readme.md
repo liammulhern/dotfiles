@@ -1,7 +1,7 @@
 # Ubuntu/Debian Config Files
 
 ## Install
-``` powershell
+``` bash
 ./install_deb.sh
 ```
 
@@ -24,8 +24,8 @@
 > If required set user to use RemoteSigned for script execution using `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned` as administrator
 
 ## Install
-``` powershell
-./install_pwsh.ps1
+``` sh 
+.\install_pwsh.ps1
 ```
 
 1. pwsh: Terminal
