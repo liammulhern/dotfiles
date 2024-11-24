@@ -42,6 +42,9 @@ Install-WithWinget -CommandName "zoxide" -WingetId "ajeetdsouza.zoxide"
 # Check and install fzf
 Install-WithWinget -CommandName "fzf" -WingetId "fzf"
 
+# Check and install powertoys
+Install-WithWinget -CommandName "powertoys" -WingetId "Microsoft.PowerToys"
+
 # Check if the 'posh-git' module is installed
 if (-not (Get-Module -ListAvailable -Name posh-git)) {
     Write-Host "'posh-git' is not installed. Installing now..." -ForegroundColor Yellow
