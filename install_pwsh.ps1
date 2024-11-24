@@ -5,6 +5,7 @@ $currentDirectory = Get-Location
 $profileSource = Join-Path $currentDirectory "Microsoft.PowerShell_profile.ps1"
 $komorebiJsonSource = Join-Path $currentDirectory "komorebi.json"
 $komorebiBarJsonSource = Join-Path $currentDirectory "komorebi.bar.json"
+$nvimSource = Join-Path $currentDirectory "nvim"
 
 # Get target directories
 $profileTarget = $PROFILE                                    # PowerShell profile path
@@ -36,6 +37,15 @@ try {
         Write-Host "Created symlink for komorebi.bar.json at $komorebiBarJsonTarget" -ForegroundColor Green
     } else {
         Write-Host "komorebi.bar.json symlink already exists." -ForegroundColor Yellow
+    }
+
+    # Symlink for nvim
+    $nvimTarget = Join-Path $userHome "AppData\Local\nvim"
+    if (-Not (Test-Path $nvimTarget)) {
+        New-Item -ItemType SymbolicLink -Path $nvimTarget -Target $nvimSource
+        Write-Host "Created symlink for nvim at $nvimTarget" -ForegroundColor Green
+    } else {
+        Write-Host "nvim symlink already exists." -ForegroundColor Yellow
     }
 } catch {
     Write-Host "An error occurred: $_" -ForegroundColor Red
@@ -98,4 +108,25 @@ if (-not (Get-Module -ListAvailable -Name posh-git)) {
     }
 } else {
     Write-Host "'posh-git' is already installed." -ForegroundColor Green
+}
+
+# Define the path to add
+$newPath = "C:\Program Files\nvim\bin"
+
+# Get the current system PATH
+$currentPath = [Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
+
+# Check if the new path is already in the PATH
+if ($currentPath -notlike "*$newPath*") {
+    Write-Host "'$newPath' is not in the system PATH. Adding it now..." -ForegroundColor Yellow
+    try {
+        # Add the new path
+        $updatedPath = "$currentPath;$newPath"
+        [Environment]::SetEnvironmentVariable("Path", $updatedPath, [System.EnvironmentVariableTarget]::Machine)
+        Write-Host "'$newPath' has been successfully added to the system PATH." -ForegroundColor Green
+    } catch {
+        Write-Host "An error occurred while adding '$newPath' to the system PATH: $_" -ForegroundColor Red
+    }
+} else {
+    Write-Host "'$newPath' is already in the system PATH." -ForegroundColor Green
 }
