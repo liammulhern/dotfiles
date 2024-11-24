@@ -1,0 +1,17 @@
+#!/bin/zsh
+
+pdf_dirs=(
+  '/c/Users/LiamM/Downloads/'
+  '/c/Users/LiamM/Documents/'
+  '/c/Users/LiamM/OneDrive/'
+  '/c/Users/LiamM/Desktop/'
+  '/c/Users/LiamM/Dropbox (Personal)/'
+)
+
+open=SumatraPDF
+
+ag -U -g ".pdf$" ${pdf_dirs[@]} \
+| fast-p \
+| tr -d '\r' \
+| fzf --read0 --reverse --info=inline --info-command='echo {1}' --no-multi-line -e -d $'\t' --preview 'v=$(echo {q} | tr " " "|"); echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;' \
+| cut -z -f 1 -d $'\t' | tr -d '\n\r' | xargs -r --null $open > /dev/null 2> /dev/null

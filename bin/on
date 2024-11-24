@@ -1,0 +1,12 @@
+#!/bin/zsh
+
+if [ -z "$1" ]; then
+  echo "Error: A file name must be set, e.g. on \"Notes on subjects\"."
+  exit 1
+fi
+
+file_name=$(echo "$1" | tr ' ' '-')
+formatted_file_name=$(date "+%Y-%m-%d")_${file_name}.md
+cd "/c/Users/LiamM/Documents/Notes" || exit
+touch "00-inbox/${formatted_file_name}"
+nvim "00-inbox/${formatted_file_name}"
