@@ -19,6 +19,8 @@ DOTFILES_DIR=$(pwd)
 # Define target locations
 TMUX_CONF="$HOME/.config/tmux/tmux.conf"
 
+mkdir "$HOME/.config/tmux"
+
 # Create symlinks function
 create_symlink() {
   local src=$1

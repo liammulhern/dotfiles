@@ -33,13 +33,16 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$PATH:/home/liam/.fzf/bin"
 
 # Add custom bash scripts to path
-export PATH="$PATH:/home/LiamM/bin"
-
-# Add miniconda to path
-export PATH="$PATH:/c/Users/LiamM/miniconda3/Scripts"
+export PATH="$PATH:/home/liam/bin"
 
 # Bat file reader alias
 export MANPAGER="zsh -c 'col -bx | bat -l man -p'"
+
+# Add nvim to path
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
+# Add zoxide to path
+export PATH="$PATH:/home/liam/.local/bin"
 
 ##############################
 # Alias Settings
@@ -102,17 +105,9 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Shell integrations
 ##############################
 
-eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-#if [ -f '/c/Users/LiamM/miniconda3/Scripts/conda.exe' ]; then
-#    eval "$('/c/Users/LiamM/miniconda3/Scripts/conda.exe' 'shell.zsh' 'hook')"
-#fi
-# <<< conda initialize <<<
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-

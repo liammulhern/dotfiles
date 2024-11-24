@@ -12,7 +12,6 @@ install_package() {
 
 # Install required packages
 install_package "zsh"
-install_package "fzf"
 install_package "bat"
 
 # Set the current working directory
@@ -47,3 +46,13 @@ if ! command -v zoxide &> /dev/null; then
 else
   echo "zoxide is already installed."
 fi
+
+if ! command -v fzf &> /dev/null; then
+  echo "Installing fzf..."
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+else
+  echo "fzf is already installed."
+fi
+
+chsh -s $(which zsh)
