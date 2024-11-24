@@ -6,21 +6,16 @@
 ```
 
 1. zsh:
-    - `sudo apt install zsh`
     - https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH
 2. tmux:
-    - `sudo apt install tmux`
     - https://github.com/tmux/tmux/wiki/Installing
 3. nvim:
     - https://github.com/neovim/neovim/blob/master/INSTALL.md
 4. fzf:
-    - `sudo apt install fzf`
     - https://github.com/junegunn/fzf
 5. bat:
-    - `sudo apt install bat`
     - https://github.com/sharkdp/bat
 6. zoxide:
-    - `curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh`
     - https://github.com/ajeetdsouza/zoxide
 
 # Windows Config Files
@@ -46,3 +41,5 @@
     - https://github.com/neovim/neovim/blob/master/INSTALL.md
 7. vscode: IDE
 8. powertoys: Quality of life tools
+9. Source Code Pro Nerd Font: Terminal font
+    - https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/SourceCodePro.zip
