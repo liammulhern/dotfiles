@@ -19,6 +19,8 @@ zi ice depth=1; zinit light romkatv/powerlevel10k
 
 zi light zsh-users/zsh-history-substring-search
 zi light zsh-users/zsh-autosuggestions
+zi wait lucid for MichaelAquilina/zsh-autoswitch-virtualenv
+zi wait lucid for ikhomutov/zsh-django
 
 ##############################
 # Environment Variables
@@ -36,7 +38,7 @@ export PATH="$PATH:/home/liam/.fzf/bin"
 export PATH="$PATH:/home/liam/bin"
 
 # Bat file reader alias
-export MANPAGER="zsh -c 'col -bx | bat -l man -p'"
+export MANPAGER="zsh -c 'col -bx | batcat -l man -p'"
 
 # Add nvim to path
 export PATH="$PATH:/opt/nvim-linux64/bin"
@@ -49,6 +51,7 @@ export PATH="$PATH:/home/liam/.local/bin"
 ##############################
 
 alias ls='ls --color'
+alias bat='batcat'
 
 # Obsidian notes
 alias oo='cd /c/Users/LiamM/Documents/Notes'
@@ -60,6 +63,13 @@ alias nf='fzf -m --preview="bat --color=always {}" --bind "enter:become(nvim {+}
 # Python
 alias py='python'
 alias pip='python -m pip'
+
+# Python - Django
+alias d='python manage.py'
+alias dmm='python manage.py makemigrations'
+alias dm='python manage.py migrate'
+alias drs='python manage.py runserver'
+alias ds='python manage.py shell'
 
 # Git
 alias gs='git status'
@@ -107,6 +117,13 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 eval "$(zoxide init --cmd cd zsh)"
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

@@ -1,3 +1,13 @@
+vim.api.nvim_create_user_command('EslintFix', function()
+  -- Save the current file first
+  vim.cmd 'write'
+  -- Run ESLint --fix on the current file
+  local file = vim.fn.expand '%:p'
+  vim.fn.system('eslint --fix ' .. file)
+  -- Reload the file to reflect the changes
+  vim.cmd 'edit!'
+end, { desc = 'Fix current file with ESLint' })
+
 return {
 
   { -- Linting
@@ -6,7 +16,8 @@ return {
     config = function()
       local lint = require 'lint'
       lint.linters_by_ft = {
-        markdown = { 'markdownlint' },
+        -- markdown = { 'markdownlint' },
+        javascript = { 'eslint' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
