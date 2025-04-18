@@ -23,7 +23,6 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
-    'mfussenegger/nvim-dap-python',
   },
   config = function()
     local dap = require 'dap'
@@ -42,30 +41,15 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
+        'delve',
       },
     }
 
-    vim.fn.sign_define('DapBreakpoint', {
-      text = '⬤',
-      texthl = 'ErrorMsg',
-      linehl = '',
-      numhl = 'ErrorMsg',
-    })
-
-    vim.fn.sign_define('DapBreakpointCondition', {
-      text = '⬤',
-      texthl = 'ErrorMsg',
-      linehl = '',
-      numhl = 'SpellBad',
-    })
-
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
-    vim.keymap.set('n', '<F6>', dap.pause, { desc = 'Debug: Pause' })
-    vim.keymap.set('n', '<F11>', dap.step_into, { desc = 'Debug: Step Into' })
-    vim.keymap.set('n', '<F10>', dap.step_over, { desc = 'Debug: Step Over' })
-    vim.keymap.set('n', '<S-F11>', dap.step_out, { desc = 'Debug: Step Out' })
-    vim.keymap.set('n', '<S-F5>', dap.terminate, { desc = 'Debug: Terminate' })
+    vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
+    vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
+    vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
     vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
     vim.keymap.set('n', '<leader>B', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
@@ -99,107 +83,6 @@ return {
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    local pythonPath = function()
-      local cwd = vim.loop.cwd()
-      if vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
-        return cwd .. '/.venv/bin/python'
-      else
-        return '/usr/bin/python'
-      end
-    end
-
-    -- Global completion function for vim.fn.input.
-    -- This function will be referenced by the input call to provide custom completions.
-    function _G.complete_management_commands(arglead, cmdline, cursorpos)
-      local files = vim.fn.globpath(vim.loop.cwd(), '**/management/commands/*.py', true, true)
-      local completions = {}
-      for _, file in ipairs(files) do
-        local base = vim.fn.fnamemodify(file, ':t'):gsub('%.py$', '')
-        if base ~= '__init__' and base:find('^' .. arglead) then
-          table.insert(completions, base)
-        end
-      end
-      return completions
-    end
-
-    require('dap-python').setup(vim.fn.getcwd() .. '/.venv/bin/python')
-    dap.configurations.python = {
-      {
-        type = 'python',
-        request = 'launch',
-        name = 'Launch file',
-        program = '${file}',
-        pythonPath = pythonPath(),
-      },
-      {
-        type = 'python',
-        request = 'launch',
-        name = 'DAP Django',
-        program = vim.loop.cwd() .. '/manage.py',
-        args = { 'runserver', '--noreload' },
-        justMyCode = true,
-        django = true,
-        console = 'integratedTerminal',
-      },
-      {
-        type = 'python',
-        request = 'launch',
-        name = 'DAP Django Managment',
-        program = vim.loop.cwd() .. '/manage.py',
-        args = function()
-          local args_string = vim.fn.input('Enter management command: ', '', 'customlist,v:lua.complete_management_commands')
-          return vim.split(args_string, ' +')
-        end,
-        justMyCode = true,
-        django = true,
-        console = 'integratedTerminal',
-      },
-      {
-        type = 'python',
-        request = 'launch',
-        name = 'Pytest: Current File',
-        module = 'pytest',
-        args = {
-          '${file}',
-          '-sv',
-          '--log-cli-level=INFO',
-          '--log-file=test_out.log',
-        },
-        console = 'integratedTerminal',
-      },
-      {
-        type = 'python',
-        request = 'attach',
-        name = 'Attach remote',
-        connect = function()
-          return {
-            host = '127.0.0.1',
-            port = 5678,
-          }
-        end,
-      },
-      {
-        type = 'python',
-        request = 'launch',
-        name = 'Launch file with arguments',
-        program = '${file}',
-        args = function()
-          local args_string = vim.fn.input 'Arguments: '
-          return vim.split(args_string, ' +')
-        end,
-        console = 'integratedTerminal',
-        pythonPath = pythonPath(),
-      },
-    }
-
-    dap.adapters.python = {
-      type = 'executable',
-      command = pythonPath(),
-      args = { '-m', 'debugpy.adapter' },
-    }
-
-    -- vim.keymap.set('n', '<F5>', dap., { desc = 'Debug: Start/Continue' })
 
     -- Install golang specific config
     require('dap-go').setup {
