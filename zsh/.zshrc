@@ -41,6 +41,12 @@ export PATH="$PATH:/c/Users/LiamM/miniconda3/Scripts"
 # Bat file reader alias
 export MANPAGER="zsh -c 'col -bx | bat -l man -p'"
 
+# NVIM Path
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+
+# Zoxide Path
+export PATH="$PATH:/home/liam/.local/bin"
+
 ##############################
 # Alias Settings
 ##############################
@@ -102,7 +108,6 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Shell integrations
 ##############################
 
-eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
 # >>> conda initialize >>>
