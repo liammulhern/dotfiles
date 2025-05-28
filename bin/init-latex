@@ -1,0 +1,87 @@
+#!/bin/zsh
+
+TEMPLATE_DIR="${LATEX_TEMPLATE_DIR:-$DOTFILES_DIR/latex/.latex-templates/default}"
+MAIN_TEX="main.tex"
+
+# === Help Text ===
+print_help() {
+cat << EOF
+📄 LaTeX Project Initializer
+
+Usage:
+  init-latex <project-name>
+
+Description:
+  Creates a new LaTeX project from a predefined template.
+  The template must be located at:
+    \$LATEX_TEMPLATE_DIR (or default: $TEMPLATE_DIR)
+
+Options:
+  -h, --help        Show this help message and exit
+
+Interactive Prompts:
+  📚 Semester information (e.g., Semester 1) is prompted
+     and included in the header of the document.
+
+Template Placeholders:
+  - %%TITLE%%      Replaced with the project name
+  - %%SUBTITLE%%   Replaced with "Semester X, YYYY-MM-DD"
+
+Example:
+  init-latex "Assignment"
+
+EOF
+}
+
+# === Handle --help flag ===
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    print_help
+    exit 0
+fi
+
+# === Ensure project name ===
+PROJECT_NAME=${1}
+if [ -z "$PROJECT_NAME" ]; then
+    echo "❌ Error: No project name provided."
+    echo "Run with -h for help."
+    exit 1
+fi
+
+# === Check template exists ===
+if [ ! -d "$TEMPLATE_DIR" ]; then
+    echo "❌ Template directory not found at '$TEMPLATE_DIR'"
+    echo "Set LATEX_TEMPLATE_DIR or create: ~/.latex-templates/default"
+    exit 1
+fi
+
+# === Prompt for Semester ===
+read -rp "📚 Enter semester info (e.g., Semester 1, 2025): " SEMESTER_INPUT
+SEMESTER_INPUT=${SEMESTER_INPUT:-"Semester 1"}
+
+# === Compose subtitle with today's date ===
+SUBTITLE="${SEMESTER_INPUT}, $(date +%Y-%m-%d)"
+
+# === Create project directory ===
+echo "📁 Creating LaTeX project '$PROJECT_NAME' from template"
+mkdir -p "$PROJECT_NAME"
+cp -r "$TEMPLATE_DIR"/. "$PROJECT_NAME"
+
+cd "$PROJECT_NAME" || exit 1
+
+# === Replace placeholders ===
+if grep -q '%%TITLE%%' "$MAIN_TEX" && grep -q '%%SUBTITLE%%' "$MAIN_TEX"; then
+    sed -i "s|%%TITLE%%|$PROJECT_NAME|g" "$MAIN_TEX"
+    sed -i "s|%%SUBTITLE%%|$SUBTITLE|g" "$MAIN_TEX"
+    echo "📌 Replaced placeholders in $MAIN_TEX"
+else
+    echo "⚠️  No placeholders (%%TITLE%%, %%SUBTITLE%%) found in $MAIN_TEX"
+fi
+
+# === Initialize git ===
+if [ ! -d .git ]; then
+    git init > /dev/null
+    echo "🔧 Initialized Git repo"
+fi
+
+echo "✅ Project ready at: $(pwd)"
+

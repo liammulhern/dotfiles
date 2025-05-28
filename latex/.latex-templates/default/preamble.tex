@@ -1,0 +1,75 @@
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{nicefrac}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{circuitikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows,calc}
+\usepackage{hyperref}
+\hypersetup{colorlinks, linkcolor=blue, urlcolor=blue, citecolor=blue}
+\usepackage{fancyhdr}
+\usepackage{minted}
+\usepackage{siunitx}
+\usepackage{soul}
+\usepackage{dirtytalk}
+\usepackage{fancyvrb}
+\usepackage{tabularx}
+
+\graphicspath{{figures/}}
+\setlength\parindent{0pt}
+\setlength\parskip{6pt}
+
+% --- Title & Subtitle Commands ---
+\newcommand{\setmetainfo}[2]{%
+  \newcommand{\projecttitle}{#1}%
+  \newcommand{\projectsubtitle}{#2}%
+}
+
+% --- Header setup (uses safe macros, not \@title etc.) ---
+\fancyhead[L]{\textbf{\projecttitle}}
+\fancyhead[R]{\projectsubtitle}
+\fancyfoot[C]{\thepage}
+
+% Default empty in case not set
+\setmetainfo{}{}
+
+
+% Optional: define how \maketitle renders things
+\makeatletter
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\newcommand{\@subtitle}{}
+\renewcommand{\maketitle}{
+  \begin{center}
+    {\LARGE \bfseries \projecttitle}\\[0.5em]
+    {\large \@author}\\[0.25em]
+    {\small \projectsubtitle}
+  \end{center}
+}
+\makeatother
+
+% Counters
+\newcounter{questioncounter}
+\newcounter{boldalphcounter}
+\renewcommand{\theboldalphcounter}{(\alph{boldalphcounter})}
+\newenvironment{boldalphlist}{\begin{list}{\textbf{\theboldalphcounter}}%
+  {\usecounter{boldalphcounter}}}{\end{list}}
+
+\newcounter{alphcounter}
+\renewcommand{\thealphcounter}{(\alph{alphcounter})}
+\newenvironment{alphlist}{\begin{list}{\thealphcounter}%
+  {\usecounter{alphcounter}}}{\end{list}}
+
+\newcounter{romancounter}
+\renewcommand{\theromancounter}{\roman{romancounter})}
+\newenvironment{romanlist}{\begin{list}{\textbf{\theromancounter}}%
+  {\usecounter{romancounter}}}{\end{list}}
+
+\newcounter{boldarabiccounter}
+\renewcommand{\theboldarabiccounter}{\arabic{boldarabiccounter}}
+\newenvironment{boldarabiclist}{\begin{list}{\textbf{\theboldarabiccounter.}}%
+  {\usecounter{boldarabiccounter}}}{\end{list}}
+
