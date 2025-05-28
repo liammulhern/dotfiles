@@ -36,6 +36,8 @@ export PATH="$PATH:/home/liam/.fzf/bin"
 # Add custom bash scripts to path
 export PATH="$PATH:/home/liam/bin"
 
+export PATH="$PATH:/home/liam/dotfiles/bin"
+
 # Bat file reader alias
 export MANPAGER="zsh -c 'col -bx | batcat -l man -p'"
 
