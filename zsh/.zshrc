@@ -47,6 +47,10 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 # Zoxide Path
 export PATH="$PATH:/home/liam/.local/bin"
 
+# Add DOTFILES DIR
+export DOTFILES_DIR="$HOME/dotfiles"
+export PATH="$PATH:$DOTFILES_DIR/bin"
+
 ##############################
 # Alias Settings
 ##############################
