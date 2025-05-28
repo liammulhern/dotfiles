@@ -19,7 +19,6 @@ zi ice depth=1; zinit light romkatv/powerlevel10k
 
 zi light zsh-users/zsh-history-substring-search
 zi light zsh-users/zsh-autosuggestions
-zi wait lucid for MichaelAquilina/zsh-autoswitch-virtualenv
 zi wait lucid for ikhomutov/zsh-django
 
 ##############################
@@ -61,15 +60,15 @@ alias or='nvim /c/Users/LiamM/Documents/Notes/00-inbox/*.md'
 alias nf='fzf -m --preview="bat --color=always {}" --bind "enter:become(nvim {+})"'
 
 # Python
-alias py='python'
-alias pip='python -m pip'
+alias py='python3'
+alias pip='python3 -m pip'
 
 # Python - Django
-alias d='python manage.py'
-alias dmm='python manage.py makemigrations'
-alias dm='python manage.py migrate'
-alias drs='python manage.py runserver'
-alias ds='python manage.py shell'
+alias d='python3 manage.py'
+alias dmm='python3 manage.py makemigrations'
+alias dm='python3 manage.py migrate'
+alias drs='python3 manage.py runserver'
+alias ds='python3 manage.py shell'
 
 # Git
 alias gs='git status'
