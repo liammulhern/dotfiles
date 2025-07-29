@@ -38,11 +38,13 @@ export PATH="$PATH:/home/liam/bin"
 
 export PATH="$PATH:/home/liam/dotfiles/bin"
 
+export LATEX_TEMPLATE_DIR="/home/liam/dotfiles/latex/.latex-templates/default/"
+
 # Bat file reader alias
 export MANPAGER="zsh -c 'col -bx | batcat -l man -p'"
 
 # Add nvim to path
-export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 
 # Add zoxide to path
 export PATH="$PATH:/home/liam/.local/bin"
@@ -117,10 +119,6 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 ##############################
 
 eval "$(zoxide init --cmd cd zsh)"
-
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
