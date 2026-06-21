@@ -528,6 +528,8 @@ require('lazy').setup({
         emmet_language_server = {},
         cmake = {},
         tailwindcss = {},
+        hls = {},
+        texlab = {},
       }
 
       -- Ensure the servers and tools above are installed

@@ -1,45 +1,62 @@
-# Ubuntu/Debian Config Files
+# Dotfiles
+
+Managed with [chezmoi](https://www.chezmoi.io/).
 
 ## Install
-``` bash
-./install_deb.sh
+
+### 1. Install chezmoi
+
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)"
 ```
 
-1. zsh:
-    - https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH
-2. tmux:
-    - https://github.com/tmux/tmux/wiki/Installing
-3. nvim:
-    - https://github.com/neovim/neovim/blob/master/INSTALL.md
-4. fzf:
-    - https://github.com/junegunn/fzf
-5. bat:
-    - https://github.com/sharkdp/bat
-6. zoxide:
-    - https://github.com/ajeetdsouza/zoxide
+### 2. Apply dotfiles
 
-# Windows Config Files
+```bash
+chezmoi init --source ~/Projects/dotfiles --apply
+```
+
+Or from GitHub:
+
+```bash
+chezmoi init --apply liam-mulhern
+```
+
+## What's managed
+
+| Tool | Config |
+|------|--------|
+| zsh | `~/.zshrc` (Powerlevel10k, zinit, fzf, zoxide) |
+| tmux | `~/.config/tmux/tmux.conf` (tokyo-night, tpm) |
+| nvim | `~/.config/nvim/` (kickstart.nvim + custom plugins) |
+| bin scripts | `~/.local/bin/` (og, on, pf) |
+
+## How it works
+
+chezmoi reads the source directory and applies files to the home directory using naming conventions:
+
+- `dot_*` → `.` prefix in filename (e.g. `dot_zshrc` → `~/.zshrc`)
+- `dot_config/nvim/` → `~/.config/nvim/`
+- `executable_*` → file gets executable bit set
+- `.chezmoiscripts/run_once_*` → run once on first apply (package/tool installation)
+
+## Dependencies
+
+The `run_once` scripts install:
+
+- **apt**: zsh, fzf, bat, tmux
+- **curl**: neovim (latest release), zoxide
+
+## Neovim plugins
+
+LSP servers and treesitter parsers are installed automatically by Mason and lazy.nvim on first launch.
+
+## Windows
 
 > [!WARNING]
-> If required set user to use RemoteSigned for script execution using `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned` as administrator
+> Set execution policy before running: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned` (as administrator)
 
-## Install
-``` sh 
-.\install_pwsh.ps1
-```
+Windows config is not yet managed by chezmoi. Dependencies:
 
-1. pwsh: Terminal
-2. komorebi: Tiling window manager
-    - https://lgug2z.github.io/komorebi/
-3. zoxide: Smart change directory
-    - https://github.com/ajeetdsouza/zoxide
-4. fzf: Fuzzy finder
-    - https://github.com/junegunn/fzf
-5. oh-my-posh: Powershell theme w/ plugins
-    - https://github.com/jandedobbeleer/oh-my-posh
-6. nvim: Text editor
-    - https://github.com/neovim/neovim/blob/master/INSTALL.md
-7. vscode: IDE
-8. powertoys: Quality of life tools
-9. Source Code Pro Nerd Font: Terminal font
-    - https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/SourceCodePro.zip
+- pwsh, komorebi, zoxide, fzf, oh-my-posh, nvim, vscode, powertoys
+- [Source Code Pro Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/SourceCodePro.zip)

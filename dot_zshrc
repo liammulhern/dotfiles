@@ -34,12 +34,29 @@ export PATH="$PATH:/home/liam/.fzf/bin"
 
 # Add custom bash scripts to path
 export PATH="$PATH:/home/LiamM/bin"
+export PATH="$PATH:/home/liam/.local/bin"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$PATH:/home/liam/Projects/dotfiles/bin"
+export PATH="$PATH:/home/liam/Projects/dir2prompt"
+export PATH="$PATH:/usr/local/android-studio/bin"
 
 # Add miniconda to path
 export PATH="$PATH:/c/Users/LiamM/miniconda3/Scripts"
 
 # Bat file reader alias
-export MANPAGER="zsh -c 'col -bx | bat -l man -p'"
+export MANPAGER="zsh -c 'col -bx | batcat -l man -p'"
+
+# Set default editors
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+##############################
+# Android Studio
+##############################
+
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 ##############################
 # Alias Settings
@@ -52,7 +69,7 @@ alias oo='cd /c/Users/LiamM/Documents/Notes'
 alias or='nvim /c/Users/LiamM/Documents/Notes/00-inbox/*.md'
 
 # Fuzzy find open in nvim
-alias nf='fzf -m --preview="bat --color=always {}" --bind "enter:become(nvim {+})"'
+alias nf='fzf -m --preview="batcat --color=always {}" --bind "enter:become(nvim {+})"'
 
 # Python
 alias py='python'
@@ -112,7 +129,18 @@ eval "$(zoxide init --cmd cd zsh)"
 #fi
 # <<< conda initialize <<<
 
+# pnpm
+export PNPM_HOME="/home/liam/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+[ -f "/home/liam/.ghcup/env" ] && . "/home/liam/.ghcup/env" # ghcup-env
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 
 
