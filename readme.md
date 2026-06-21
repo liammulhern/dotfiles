@@ -30,6 +30,14 @@ chezmoi init --apply liam-mulhern
 | tmux | `~/.config/tmux/tmux.conf` (tokyo-night, tpm) |
 | nvim | `~/.config/nvim/` (kickstart.nvim + custom plugins) |
 | hyprland | `~/.config/hypr/` (hyprland, hyprlock, hypridle + scripts) |
+| waybar | `~/.config/waybar/` (config, style.css) |
+| kitty | `~/.config/kitty/` (kitty.conf, theme.conf, themes) |
+| swaync | `~/.config/swaync/` (config.json, style.css, icons, images) |
+| wofi | `~/.config/wofi/style.css` |
+| ghostty | `~/.config/ghostty/config` |
+| fastfetch | `~/.config/fastfetch/` (multiple layouts) |
+| yazi | `~/.config/yazi/` (keymap, packages, yamb plugin) |
+| wlogout | `~/.config/wlogout/` (layout, style.css, icons) |
 | bin scripts | `~/.local/bin/` (og, on, pf) |
 
 ## How it works

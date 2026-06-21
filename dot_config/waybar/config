@@ -1,0 +1,210 @@
+// -*- mode: jsonc -*-
+{
+    "spacing": 4,
+    "height": 40,
+
+    // Which modules go where
+    "modules-left": [
+        "clock",
+        "hyprland/workspaces",
+        "custom/media"
+    ],
+    "modules-right": [
+        "network",
+        "battery",
+        "custom/power"
+    ],
+
+    // Core modules
+    "clock": {
+        "interval": 1,
+        "format":       " {:%H:%M:%S}",
+        "format-alt":   " {:%H:%M   %Y, %d %B, %A}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode":        "month",
+            "mode-mon-col": 3,
+            "weeks-pos":   "right",
+            "on-scroll":   1,
+            "format": {
+                "months": "<span color='#ffffff'> <b>{}</b></span>",
+                "days":   "<span color='#ffffff'><b>{}</b></span>",
+                "today":  "<span color='#d97324'><b>{}</b></span>"
+            }
+        }
+    },
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs":    true,
+        "warp-on-scroll": false,
+        "format":         "{name}{icon}",
+        "format-icons": {
+            "urgent": "",
+            "active": "",
+            "default": ""
+        }
+    },
+
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format":   "{name} {icon} ",
+        "format-icons": {
+            "locked":   "",
+            "unlocked": ""
+        }
+    },
+
+    "mpd": {
+        "interval":                 5,
+        "format":                   "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+        "format-disconnected":      "Disconnected ",
+        "format-stopped":           "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "tooltip-format":           "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)",
+        "unknown-tag":              "N/A",
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ",
+            "on":  " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused":  "",
+            "playing": ""
+        }
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated":   "",
+            "deactivated": ""
+        }
+    },
+
+    // System stats
+    "cpu": {
+        "format":  "{usage}% ",
+        "tooltip": false
+    },
+
+    "memory": {
+        "format": "{}% "
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "format":             "{temperatureC}°C {icon}",
+        "format-icons":       ["", "", ""]
+    },
+
+    "backlight": {
+        "format":       "{percent}% {icon}",
+        "format-icons": ["","","","","","","","",""]
+    },
+
+    "battery": {
+        "align":           0,
+        "rotate":          0,
+        "full-at":         100,
+        "design-capacity": false,
+        "states": {
+            "good":     95,
+            "warning":  30,
+            "critical": 15
+        },
+        "format":            "{icon} {capacity}%",
+        "format-charging":   " {capacity}%",
+        "format-plugged":    "󱘖 {capacity}%",
+        "format-full":       "{icon} Full",
+        "format-alt":        "{icon} {time}",
+        "format-alt-click":  "click",
+        "format-icons": [
+            "󰂎","󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"
+        ],
+        "format-time":      "{H}h {M}min",
+        "tooltip":          true,
+        "tooltip-format":   "{timeTo} {power}w",
+        "on-click-middle":  "$HOME/.config/hypr/scripts/ChangeBlur.sh",
+        "on-click-right":   "$HOME/.config/hypr/scripts/Wlogout.sh"
+    },
+
+    "power-profiles-daemon": {
+        "format":         "{icon}",
+        "tooltip":        true,
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "format-icons": {
+            "default":       "",
+            "performance":   "",
+            "balanced":      "",
+            "power-saver":   ""
+        }
+    },
+
+    "network": {
+        "format":                "{ifname}",
+        "format-wifi":           "{icon}",
+        "format-ethernet":       "󰌘",
+        "format-disconnected":   "󰌙",
+        "format-linked":         "󰈁 {ifname} (No IP)",
+        "tooltip-format":        "{ipaddr}  {bandwidthUpBits}  {bandwidthDownBits}",
+        "tooltip-format-wifi":   "{essid} {icon} {signalStrength}%",
+        "tooltip-format-ethernet":"{ifname} 󰌘",
+        "tooltip-format-disconnected":"󰌙 Disconnected",
+        "max-length":            30,
+        "format-icons":          ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+        "on-click-right":        "$HOME/.config/hypr/scripts/WaybarScripts.sh --nmtui"
+    },
+
+    "tray": {
+        "spacing": 10
+    },
+
+    "pulseaudio": {
+        "format":            "{volume}% {icon} {format_source}",
+        "format-muted":      " {format_source}",
+        "format-bluetooth":  "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-source":     "{volume}% ",
+        "format-source-muted":"",
+        "format-icons": {
+            "headphone":  "",
+            "hands-free": "",
+            "headset":    "",
+            "phone":      "",
+            "portable":   "",
+            "car":        "",
+            "default":    ["","",""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    // Custom scripts & menus
+    "custom/media": {
+        "exec":        "$HOME/.config/waybar/mediaplayer.py 2> /dev/null",
+        "return-type": "json",
+        "format":      "{icon} {text}",
+        "max-length":  40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "escape": true
+    },
+
+    "custom/power": {
+        "format":          " ⏻ ",
+        "on-click":        "$HOME/.config/hypr/scripts/wlogout.sh",
+        "tooltip":         false
+    }
+}
+
