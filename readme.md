@@ -29,6 +29,7 @@ chezmoi init --apply liam-mulhern
 | zsh | `~/.zshrc` (Powerlevel10k, zinit, fzf, zoxide) |
 | tmux | `~/.config/tmux/tmux.conf` (tokyo-night, tpm) |
 | nvim | `~/.config/nvim/` (kickstart.nvim + custom plugins) |
+| hyprland | `~/.config/hypr/` (hyprland, hyprlock, hypridle + scripts) |
 | bin scripts | `~/.local/bin/` (og, on, pf) |
 
 ## How it works
