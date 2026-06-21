@@ -1,18 +1,28 @@
-#!/bin/bash
-# Install apt packages required by these dotfiles
+#!/usr/bin/env bash
 
-set -e
-
-install_package() {
-  if ! dpkg -s "$1" &>/dev/null; then
-    echo "Installing $1..."
-    sudo apt install -y "$1"
-  fi
+install_apt() {
+  sudo apt update -q
+  for pkg in zsh fzf bat tmux; do
+    if ! dpkg -s "$pkg" &>/dev/null; then
+      sudo apt install -y "$pkg"
+    fi
+  done
 }
 
-sudo apt update -q
+install_pacman() {
+  sudo pacman -S --needed --noconfirm zsh fzf bat tmux
+}
 
-install_package zsh
-install_package fzf
-install_package bat
-install_package tmux
+install_dnf() {
+  sudo dnf install -y zsh fzf bat tmux
+}
+
+if command -v apt &>/dev/null; then
+  install_apt
+elif command -v pacman &>/dev/null; then
+  install_pacman
+elif command -v dnf &>/dev/null; then
+  install_dnf
+else
+  echo "No supported package manager found. Install manually: zsh fzf bat tmux"
+fi
