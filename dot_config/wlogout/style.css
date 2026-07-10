@@ -13,7 +13,7 @@ button {
     background-color: rgba(31, 35, 53, 1);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 20%;
+    background-size: 30%;
     animation: gradient_f 20s ease-in infinite;
     outline-style: none;
     border: none;
@@ -21,6 +21,7 @@ button {
     box-shadow: none;
     text-shadow: none;
     border-width: 0px;
+    min-width: 0;
 
 }
 
@@ -39,7 +40,7 @@ button:hover {
 
 button:hover#lock {
     border-radius: 20px;
-    margin: 50px 0px 50px 100px;
+    margin: 10px 0px 10px 0px;
 }
 
 button:hover#logout,
@@ -47,17 +48,17 @@ button:hover#suspend,
 button:hover#shutdown,
 button:hover#hibernate {
     border-radius: 20px;
-    margin: 50px 0px 50px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 button:hover#reboot {
     border-radius: 20px;
-    margin: 50px 100px 50px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 button:focus#lock {
     border-radius: 20px;
-    margin: 50px 0px 50px 100px;
+    margin: 10px 0px 10px 0px;
 }
 
 button:focus#logout,
@@ -65,52 +66,52 @@ button:focus#suspend,
 button:focus#shutdown,
 button:focus#hibernate {
     border-radius: 20px;
-    margin: 50px 0px 50px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 button:focus#reboot {
     border-radius: 20px;
-    margin: 50px 100px 50px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 #lock {
     background-image:
       image(url("./icons/lock.png"));
     border-radius: 40px 0px 0px 40px;
-    margin: 100px 0px 100px 100px;
+    margin: 20px 0px 20px 0px;
 }
 
 #logout {
     background-image:
       image(url("./icons/logout.png"));
     border-radius: 0px;
-    margin: 100px 0px 100px 0px;
+    margin: 20px 0px 20px 0px;
 }
 
 #suspend {
     background-image:
       image(url("./icons/suspend.png"));
     border-radius: 0px;
-    margin: 100px 0px 100px 0px;
+    margin: 20px 0px 20px 0px;
 }
 
 #shutdown {
     background-image:
       image(url("./icons/power.png"));
     border-radius: 0px;
-    margin: 100px 0px 100px 0px;
+    margin: 20px 0px 20px 0px;
 }
 
 #hibernate {
     background-image:
       image(url("./icons/sleep.png"));
     border-radius: 0px;
-    margin: 100px 0px 100px 0px;
+    margin: 20px 0px 20px 0px;
 }
 
 #reboot {
     background-image:
       image(url("./icons/restart.png"));
     border-radius: 0px 40px 40px 0px;
-    margin: 100px 100px 100px 0px;
+    margin: 20px 0px 20px 0px;
 }

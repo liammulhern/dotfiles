@@ -13,26 +13,21 @@ return {
     end
 
     local function footer()
-      local datetime = os.date ' %d-%m-%Y   %H:%M:%S'
+      local datetime = os.date ' %d-%m-%Y   %H:%M:%S'
       local version = vim.version()
-      local nvim_version_info = '   v' .. version.major .. '.' .. version.minor .. '.' .. version.patch
-
+      local nvim_version_info = '   v' .. version.major .. '.' .. version.minor .. '.' .. version.patch
       return datetime .. nvim_version_info
     end
 
-    local logo = {
-      '',
-    }
-
-    dashboard.section.header.val = logo
+    dashboard.section.header.val = { '' }
     dashboard.section.header.opts.hl = pick_color()
 
     dashboard.section.buttons.val = {
-      dashboard.button('<Leader>-', '  File Explorer'),
-      dashboard.button('<Leader>sf', '  Find File'),
-      dashboard.button('<Leader>sg', '  Find Word'),
-      dashboard.button('Lazy Update', '  Update plugins', ':Lazy update<cr>'),
-      dashboard.button('q', ' Quit', ':qa<cr>'),
+      dashboard.button('<Leader>-', '  File Explorer'),
+      dashboard.button('<Leader>sf', '  Find File'),
+      dashboard.button('<Leader>sg', '  Find Word'),
+      dashboard.button('Lazy Update', '  Update plugins', ':Lazy update<cr>'),
+      dashboard.button('q', ' Quit', ':qa<cr>'),
     }
 
     dashboard.section.footer.val = footer()
