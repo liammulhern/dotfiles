@@ -1,4 +1,7 @@
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<leader>m', function()
+  vim.cmd('Man ' .. vim.fn.expand '<cword>')
+end, { desc = 'Open [M]an page for word under cursor' })
 vim.keymap.set('n', 'v<leader>', '<C-v>', { desc = 'Visual Block' })
 vim.keymap.set('n', '<leader>l', '<cmd>b#<CR>', { desc = 'Previous Buffer' })
 
