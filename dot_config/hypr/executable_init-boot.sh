@@ -10,7 +10,7 @@ scriptsDir=$HOME/.config/hypr/scripts
 color_scheme="prefer-dark"
 gtk_theme="Flat-Remix-GTK-Blue-Dark"
 icon_theme="Flat-Remix-Blue-Dark"
-wallpaper=$HOME/Pictures/wallpapers/Gradient-Background.png
+wallpaper=$HOME/Pictures/GradientBackground.png
 
 effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type grow --transition-pos 0.925,0.977 --transition-duration 2"
 
@@ -20,7 +20,7 @@ if [ ! -f "$HOME/.config/hypr/.initial_startup_done" ]; then
     sleep 1
     # Initialize wallust and wallpaper
     if [ -f "$wallpaper" ]; then
-	query || swww-daemon && swww img $wallpaper $effect
+	query || awww-daemon && awww img $wallpaper $effect
     fi
 
     # initiate GTK dark mode and apply icon and cursor theme
