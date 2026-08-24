@@ -15,6 +15,22 @@ return {
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
+    -- patch nvim-treesitter v1 compat: ft_to_lang and ft_to_parser were removed
+    local ts_parsers_ok, ts_parsers = pcall(require, 'nvim-treesitter.parsers')
+    if ts_parsers_ok and not ts_parsers.ft_to_lang then
+      ts_parsers.ft_to_lang = function(ft)
+        return vim.treesitter.language.get_lang(ft) or ft
+      end
+    end
+
+    -- telescope's ts_highlighter uses old nvim-treesitter APIs removed in v1;
+    -- replace it with a version that calls native nvim treesitter directly
+    require('telescope.previewers.utils').ts_highlighter = function(bufnr, ft)
+      local lang = vim.treesitter.language.get_lang(ft)
+      if not lang then return false end
+      return pcall(vim.treesitter.start, bufnr, lang)
+    end
+
     require('telescope').setup {
       extensions = {
         ['ui-select'] = {

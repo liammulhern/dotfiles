@@ -20,6 +20,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- vim.treesitter.language.ft_to_lang was removed in nvim 0.10; shim for any direct callers
+if not vim.treesitter.language.ft_to_lang then
+  vim.treesitter.language.ft_to_lang = function(ft)
+    return vim.treesitter.language.get_lang(ft)
+  end
+end
+
 require('lazy').setup({
   { import = 'plugins.ui' },
   { import = 'plugins.editor' },

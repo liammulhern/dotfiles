@@ -84,9 +84,20 @@ return {
 
     -- All servers provided by Nix — see ~/projects/nix/modules/lsp.nix
     vim.lsp.enable {
-      'clangd', 'cmake', 'pyright', 'ts_ls', 'html',
-      'emmet_language_server', 'tailwindcss', 'lua_ls',
-      'gopls', 'hls', 'texlab', 'bashls', 'nil_ls',
+      'clangd',
+      'cmake',
+      'pyright',
+      'ts_ls',
+      'html',
+      'emmet_language_server',
+      'tailwindcss',
+      'lua_ls',
+      'gopls',
+      'hls',
+      'texlab',
+      'bashls',
+      'nil_ls',
+      'svelte',
     }
   end,
 }

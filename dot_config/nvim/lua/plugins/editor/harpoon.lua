@@ -4,7 +4,14 @@ return {
     'nvim-lua/plenary.nvim',
   },
   keys = {
-    { 'ma', '<cmd>lua require("harpoon.mark").add_file()<CR>', desc = 'Add file to harpoon' },
+    {
+      'ma',
+      function()
+        require('harpoon.mark').add_file()
+        vim.notify('Harpoon: marked ' .. vim.fn.expand '%:t', vim.log.levels.INFO)
+      end,
+      desc = 'Add file to harpoon',
+    },
     { 'mA', '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', desc = 'Toggle harpoon menu' },
     { 'm1', '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', desc = 'Navigate to file 1' },
     { 'm2', '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', desc = 'Navigate to file 2' },
